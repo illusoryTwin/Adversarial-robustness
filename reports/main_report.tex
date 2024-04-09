@@ -1,0 +1,138 @@
+% \documentclass{article}
+
+% % Packages
+% \usepackage{graphicx} % For including figures
+% \usepackage{amsmath} % For mathematical symbols and equations
+% \usepackage{hyperref} % For hyperlinks
+% \usepackage{listings} % For including code snippets
+% \usepackage{float} % For precise figure placement using [H]
+
+% % Title
+% \title{Adversarial Attacks}
+% \author{Ekaterina Mozhegova}
+% \date{\today}
+
+% % Begin Document
+% \begin{document}
+
+% \maketitle
+
+% % Abstract
+% \begin{abstract}
+%   The study is based on the tutorial "Adversarial Robustness - Theory and Practice".
+
+% \end{abstract}
+
+% % Table of Contents
+% \tableofcontents
+% \newpage
+
+% % Introduction
+% \section{Introduction}
+
+% % Section
+% \section{Chapter 1}
+% \section{Chapter 2}
+% % Subsection
+% \subsection{Subsection Title}
+% This is a subsection within a section.
+
+% % Figures
+% % \begin{figure}[H]
+% %     \centering
+% %     \includegraphics[width=0.8\textwidth]{example.png}
+% %     \caption{Example figure caption.}
+% %     \label{fig:example}
+% % \end{figure}
+
+% % Equations
+% \begin{equation}
+%     E = mc^2
+%     \label{eq:einstein}
+% \end{equation}
+
+% % Referencing Figures and Equations
+% As shown in Figure \ref{fig:example}, and Equation \ref{eq:einstein}...
+
+% % Tables
+% \begin{table}[H]
+%     \centering
+%     \begin{tabular}{|c|c|}
+%     \hline
+%     Column 1 & Column 2 \\
+%     \hline
+%     Data 1 & Data 2 \\
+%     Data 3 & Data 4 \\
+%     \hline
+%     \end{tabular}
+%     \caption{Example table caption.}
+%     \label{tab:example}
+% \end{table}
+
+% % Referencing Tables
+% As shown in Table \ref{tab:example}...
+
+% % Conclusion
+% \section{Conclusion}
+% Summarize the main findings and conclusions of your report.
+
+% % References
+% \begin{thebibliography}{9}
+%     \bibitem{example_ref}
+%     Author,
+%     \textit{Title},
+%     Journal/Website,
+%     Year.
+% \end{thebibliography}
+
+% \end{document}
+
+
+\documentclass{article}
+
+% Packages
+\usepackage{graphicx} % For including figures
+\usepackage{amsmath} % For mathematical symbols and equations
+\usepackage{hyperref} % For hyperlinks
+\usepackage{listings} % For including code snippets
+\usepackage{float} % For precise figure placement using [H]
+
+% Title
+\title{Adversarial Robustness}
+\author{Ekaterina Mozhegova}
+\date{7th April}
+
+% Begin Document
+\begin{document}
+
+\maketitle
+
+% Abstract
+The study is based on the tutorial "Adversarial Robustness - Theory and Practice".
+
+\begin{abstract}
+  Adversarial robustness is essential in security-critical tasks, such as computer vision or natural language processing. For example, in cybersecurity and healthcare domains.
+\end{abstract}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Include Chapters
+\input{report1.tex}
+\input{report2.tex}
+
+% Conclusion
+% \section{Conclusion}
+% Summarize the main findings and conclusions of your report.
+
+% References
+\begin{thebibliography}{9}
+    \bibitem{example_ref}
+    Author,
+    \textit{Title},
+    Journal/Website,
+    Year.
+\end{thebibliography}
+
+\end{document}
