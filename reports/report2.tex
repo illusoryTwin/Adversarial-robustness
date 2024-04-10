@@ -1,5 +1,7 @@
 \section{Chapter 2 - Linear models}
 
+\subsection{Linear models}
+
 Let's define the model for a binary classification problem with the hypothesis function $h_\Theta$.  The loss function (logistic loss) of the model is the following:
 
 The hypothesis function is:
@@ -29,41 +31,5 @@ and substitute it in the initial equation, so that:
 
 \[\max_{\|\delta\|_{\infty} \leq \epsilon} L(y \cdot (w^T(x+\delta)+b)) = L(y \cdot (w^Tx+b) - \epsilon \|w\|_1)\]
 
-The common approach for the classification problem is to solve the optimization problem:
-\[\min_{\theta} \frac{1}{m} \sum_{i=1}^{m} l(h_{\theta}(x_{i}), y_{i})\]
-
-It is typically solved by calculating the gradient of our loss function:
-\[ \Theta := \Theta - \dfrac{\alpha}{\beta} \sum_{i \in \beta} \nabla_\Theta l (h_{\theta}(x_{i}), y_{i}) \]
-
-In standard optimization tasks, we aim to minimize the loss function. However, for creating adversarial attacks, our objective is to maximize it:
-\[\max_{\hat{x}} l(h_{\Theta}(\hat{x}, y))\]
-
-$\hat x$ here describes the adversarial example.
-
-What we are specifically interested in is the gradient:
-\[  \nabla_\Theta l (h_{\theta}(x_{i}), y_{i}) \]
-
-Adversarial example $\hat{x}$ needs to be similar to the original input $x$ to stay meaningful, so we optimize over the pertrubation to x.
-\[\max_{\delta \in \Delta} l (h_{\Theta}(x+\delta), y)\]
-
-For intuition, $\Delta$ should be the range in which the input is the same as the original $x$.
-
-
-\subsection{Targeted attacks}
-Using this technique we can deceive the model into predicting an incorrect class. To achieve this, we aim to maximize the loss function for the correct label while minimizing the loss 
-function for the targeted class. 
-
-\[\text{maximize} \left( l(h_{\theta}(x + \delta), y) - l(h_{\Theta}(x + \delta), y_{\text{target}}) \right)
-\]
-
-
-\subsection{Adversarial risks}
-
-\[ \Theta := \Theta - \dfrac{\alpha}{|\beta|} \sum_{(x, y) \in \beta} \nabla_\Theta \max_{\delta \in \Delta(x)} l (h_{\theta}(x_{i}+\delta), y_{i}) \]
-
-
-The gradient of the inner term, which involves a maximization problem, is computed as follows, taking into account Danskin's theorem.% \[\delta* = argmax_\delta \in \Delta(x) l (h_\Theta (x + \delta*), y)\]
-
-\[\delta^* = \text{argmax}_{\delta \in \Delta(x)} \mathcal{L}(h_{\Theta}(x + \delta^*), y)\]
-
-\[\Delta_\Theta \max_{\delta \in \Delta(x)} l (h_\Theta(x+\delta), y) = \Delta_\Theta l (h_\Theta(x + \delta^*), y)\]
+\subsection{Practical results}
+I observed a tradeoff while testing the robustness of the model on MNIST dataset for images labeled as 0 and 1. Surprisingly, the model made more mistakes on non-adversarial data, despite previously performing better on this type of data.
