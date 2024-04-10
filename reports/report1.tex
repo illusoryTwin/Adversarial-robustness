@@ -35,6 +35,12 @@ function for the targeted class.
 
 \subsection{Adversarial risks}
 
+The concept of adversarial risk is introduced to enhance the robustness of the model. We can evaluate adversarial risks alongside traditional empirical risks. They are estimated using a finite set of data.
+\[ R_{adv}(h\theta) = E_{(x,y) \sim D} \left[ \max_{\delta \in \Delta(x)} \mathcal{L}(h\theta(x+\delta),y) \right] \]
+
+Evaluating adversarial risks allows us to assess the accuracy of the model even in cases where it is subjected to attacks or adversarial manipulation. This evaluation can help us predict
+the behaviour of our model in case of attacks. 
+
 \[ \Theta := \Theta - \dfrac{\alpha}{|\beta|} \sum_{(x, y) \in \beta} \nabla_\Theta \max_{\delta \in \Delta(x)} l (h_{\theta}(x_{i}+\delta), y_{i}) \]
 
 
