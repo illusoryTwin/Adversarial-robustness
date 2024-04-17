@@ -1,0 +1,105 @@
+\section{Chapter 3 - Neural Networks}
+
+\subsection{Aspects of Neural Networks}
+
+The application and performance of adversarial attacks are highly relevant to neural networks.
+
+The form of the optimization problem (inner maximization problem) remains the same:
+\[\max_{\|\delta\|\leq\epsilon} \ell(h_{\theta}(x + \delta), y)\]    
+What is different from the previous examples is $h(\theta)$, which now represents a neural network.
+
+The complexity of neural networks' architecture makes them more challenging to be robust, while simultaneously rendering them susceptible to adversarial attacks.
+
+First of all, loss surfaces do not often guide to the optimal solution, while they can be too steep, which often corresponds to local optima convergence.
+
+Secondly, the inner maximization problem for neural networks is also more challenging due to the non-convexity of the cost surface.
+
+Moreover, it is more difficult to navigate the cost surface.\\
+
+To further explore the topic of adversarial attacks in neural networks, let's propose that adversarial attacks are based on two main components:
+
+\begin{enumerate}
+\item The norm of the perturbation ball.
+\item The optimization method used within that norm ball.\\
+\end{enumerate}
+
+Three main approaches to adversarial attacks on neural networks exist: 
+\begin{enumerate}
+    \item Lower Bounding the inner optimization, 
+    \item Exactly solving the inner maximization (combinatorial optimization), 
+    \item Upper Bound optimization
+\end{enumerate}
+
+
+\subsection{Lower Bounding the inner optimization}
+
+The Lower Bound method relying on empirical solutions is considered the most common approach.
+
+\subsubsection{The Fast Gradient Sign Method (FGSM)}
+
+The idea of adversarial attacks via the FGSM relies on calculating an optimal perturbation 
+$\delta$ that maximizes the loss function. This calculation is based on the gradient obtained through backpropagation. 
+This gradient indicates how the loss function changes when we make small adjustments to $\delta$.
+
+Based on the gradient, we adjust $\delta$ to maximize the loss function. 
+\[g = \nabla_\delta l(h_\theta(x + \delta), y)\]
+
+This is performed by adding a fraction of 
+the gradient to $\delta$, scaled by a small step size parameter $\alpha$.
+
+\[\delta = \delta +  \alpha \cdot g\]
+
+We adjust $\delta$ based on the sign of the gradient: when $g<0$, $\delta < 0$ and when $g>0$, $\delta > 0$. 
+Thus, we have \[\delta := \epsilon \cdot \text{sign}(g)\].
+
+However, we also need to stick to the constraints. So, we might need to project $\delta$ back into a feasible region after adjusting it.
+
+The  $l_{\infty}$ norm ball, which selects the maximum absolute value among the elements in the set, is well-suited for this task.
+
+We must ensure $\delta$ remains within the norm ball: $||\delta||_\infty \leq \epsilon$. 
+Therefore, we project $\delta$ back into the norm ball after each adjustment.
+
+
+So, then we project $\delta$ again into the norm ball.  
+
+
+FGSM is specifically designed to attack under $l_\infty$ norm. 
+
+
+\subsubsection{Projected Gradient Descent}
+
+
+An iterative method that ensures to adjust the perturbation $\delta$ in the direction that maximizes the loss function 
+while ensuring it stays within the specified constraints.
+
+Both FGSM and PGD generate adversarial examples that are optimal since they maximize the loss function.
+While FGSM is a straightforward, one-step process, which takes a single step in the direction of the goal.
+
+Thus, we can assume PGD as an iterative FGSM, which iterates over multiple steps.
+
+\[\delta := \text{P}(\delta + \alpha \nabla_{\delta} \ell(h_\theta(x + \delta), y))\]
+
+$P$ is the projection of the value onto thhe ball norm.
+\subsubsection{Normalized Steepest Descent}
+
+\subsubsection{Targetted attacks}
+
+\subsubsection{Non-$l_{\infty}$ norms}
+
+In the methods described above, the optimization was performed under the $l_{\infty}$ norm; however, 
+the other norm types can also be used for the same task.
+
+For example, we can transfer the task to the $l_2$ norm by creating a constraint that $x+\delta$ lies in the range [0, 1].
+
+While working with $l_2$ norm, ,we simply project normalized steepest descent for the $l_2$ ball. 
+
+\[\delta := P_{\epsilon}\left(\delta - \alpha \frac{\nabla_{\delta} \ell(h_{\theta}(x + \delta), y)}{\|\nabla_{\delta} \ell(h_{\theta}(x + \delta), y)\|_2}\right)\]
+
+
+\subsection{Exactly solving the inner maximization (combinatorial optimization)}
+
+We assume attacks against each and every class and determine whether an adversarial example exists in the neighbourhood of some point.
+s
+\subsubsection{Upper and Lower bounds}
+\subsection{Upper bound}
+
