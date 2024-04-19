@@ -68,23 +68,38 @@ FGSM is specifically designed to attack under $l_\infty$ norm.
 
 \subsubsection{Projected Gradient Descent}
 
-
 An iterative method that ensures to adjust the perturbation $\delta$ in the direction that maximizes the loss function 
 while ensuring it stays within the specified constraints.
 
 Both FGSM and PGD generate adversarial examples that are optimal since they maximize the loss function.
-While FGSM is a straightforward, one-step process, which takes a single step in the direction of the goal.
+While FGSM is a straightforward, one-step process, which takes a single step in the direction of the goal,
+PGD iteratively updates the perturbation to generate adversarial examples. 
 
 Thus, we can assume PGD as an iterative FGSM, which iterates over multiple steps.
 
 \[\delta := \text{P}(\delta + \alpha \nabla_{\delta} \ell(h_\theta(x + \delta), y))\]
 
-$P$ is the projection of the value onto thhe ball norm.
+$P$ is the projection of the value onto the ball norm.
+
+However, PGD is not proved to be more effective than FGSM. It has challanges due to the fact that it starts iterating 
+from $\delta = 0$, where the gradient is small. However, it has the risk of overshooting the optimal 
+perturbation when the gradients grow fast outside this neighborhood. 
+
+
 \subsubsection{Normalized Steepest Descent}
 
 \subsubsection{Targetted attacks}
 
+The aim of untargeted attacks is to change the predicted label to any alternative label 
+by maximizing the loss for the actual (true) label and minimizing the loss for any alternative label. 
+
+The aim of the targeted attacks is to change the predicted label to a particular alternative label 
+by maximizing the loss for the actual (true) label and minimizing the loss for the targeted label. 
+
+
 \subsubsection{Non-$l_{\infty}$ norms}
+
+% The key high-level element to note here is that while ℓ∞ attacks lead to small noise everywhere in the image (precisely because this is the perturbation that is allowable under the ℓ∞ ball, ℓ2 attacks lead to perturbations that are more localized in the image, because we can “trade off” a larger perturbation in one point of the space for less perturbation in another point.
 
 In the methods described above, the optimization was performed under the $l_{\infty}$ norm; however, 
 the other norm types can also be used for the same task.
@@ -99,7 +114,31 @@ While working with $l_2$ norm, ,we simply project normalized steepest descent fo
 \subsection{Exactly solving the inner maximization (combinatorial optimization)}
 
 We assume attacks against each and every class and determine whether an adversarial example exists in the neighbourhood of some point.
-s
-\subsubsection{Upper and Lower bounds}
-\subsection{Upper bound}
 
+\subsubsection{Certifying robustness}
+
+% If we want to determine, exactly, whether any adversarial example exists for a given example and , we can simply run the integer programming solution using a targeted attack for every possible alternative class label. If any of these optimization objectives have a negative solution, then there exists and adversarial example, and the optimization formulation provides it for us. In contrast, if none of the optimization objectives is negative for any target class, then the classifier has been formally certified to be robust on this example. Let’s see how to do this to verify that a smaller perturbation ball cannot change the class label.
+
+
+
+\subsubsection{Upper and Lower bounds}
+
+Due to the high computation complexity of the excat solution method, this approach is not a good choice since it can be barely scaled to larger networks. 
+
+\subsection{Upper bounding the inner maximization}
+
+
+The other method is Upper Bounding, which incorporates different approaches to forming an upper bound. We will discuss two apppraches: convex relaxation of the integer programming and the other is \betaased on bound propagation.
+
+\subsubsection{Convex relaxation}
+
+% The tricky part of the integer program we discussed earlier is the binary constraint vi∈{0,1}vi​∈{0,1}, which captures the ReLU operation. This constraint makes the problem hard to solve because it's not a convex set. Without this constraint, the problem would be much easier to solve, as it would become a linear program, which has faster solution methods.
+
+% To make the problem easier, we can relax this constraint. Instead of requiring vivi​ to be either 0 or 1, we allow it to take on any value between 0 and 1. So, the relaxed constraint becomes 0≤vi≤10≤vi​≤1. This relaxation makes the problem more manageable because it removes the combinatorial complexity introduced by the binary constraint.
+
+
+% So, by relaxing the binary constraint to allow vivi​ to take any value between 0 and 1, we're essentially making the problem easier to handle. This is a common strategy used in optimization, known as convex relaxation.
+
+% Despite this change, the overall optimization problem remains unchanged from before. The key idea is that this relaxation helps us better understand the problem. For instance, if we solve the relaxed version of a targeted attack problem and find that the objective (the value we're trying to optimize) is still positive, it tells us something important. Specifically, it suggests that the attack won't be effective.
+
+% Why? Because if the relaxed problem's objective is positive, it means that the relaxed set of solutions is larger than the original set. In other words, if no "adversarial example" exists in the relaxed set, it won't exist in the original set either. So, even though we've simplified the problem by relaxing the constraints, we can still draw meaningful conclusions from it.
