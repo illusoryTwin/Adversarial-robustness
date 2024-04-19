@@ -99,16 +99,20 @@ by maximizing the loss for the actual (true) label and minimizing the loss for t
 
 \subsubsection{Non-$l_{\infty}$ norms}
 
-% The key high-level element to note here is that while ℓ∞ attacks lead to small noise everywhere in the image (precisely because this is the perturbation that is allowable under the ℓ∞ ball, ℓ2 attacks lead to perturbations that are more localized in the image, because we can “trade off” a larger perturbation in one point of the space for less perturbation in another point.
 
 In the methods described above, the optimization was performed under the $l_{\infty}$ norm; however, 
 the other norm types can also be used for the same task.
 
 For example, we can transfer the task to the $l_2$ norm by creating a constraint that $x+\delta$ lies in the range [0, 1].
 
-While working with $l_2$ norm, ,we simply project normalized steepest descent for the $l_2$ ball. 
+While working with $l_2$ norm, we simply project normalized steepest descent for the $l_2$ ball. 
 
 \[\delta := P_{\epsilon}\left(\delta - \alpha \frac{\nabla_{\delta} \ell(h_{\theta}(x + \delta), y)}{\|\nabla_{\delta} \ell(h_{\theta}(x + \delta), y)\|_2}\right)\]
+
+The key behind the $l_\infty$ and $l_2$ norms is the fact that while $l_\infty$ attacks are distributed smoothly in the image, 
+$l_2$ attacks are typically localized in the specific area of the image. 
+
+
 
 
 \subsection{Exactly solving the inner maximization (combinatorial optimization)}
@@ -128,7 +132,8 @@ Due to the high computation complexity of the excat solution method, this approa
 \subsection{Upper bounding the inner maximization}
 
 
-The other method is Upper Bounding, which incorporates different approaches to forming an upper bound. We will discuss two apppraches: convex relaxation of the integer programming and the other is \betaased on bound propagation.
+The other method is Upper Bounding, which incorporates different approaches to forming an upper bound. We will discuss two apppraches: convex relaxation of the integer programming and the other 
+is based on bound propagation.
 
 \subsubsection{Convex relaxation}
 
