@@ -81,12 +81,10 @@ Thus, we can assume PGD as an iterative FGSM, which iterates over multiple steps
 
 $P$ is the projection of the value onto the ball norm.
 
-However, PGD is not proved to be more effective than FGSM. It has challanges due to the fact that it starts iterating 
+Although PGD can find the optima more effectively than FGSM is is proved to be slower. PGD has challanges due to the fact that it starts iterating 
 from $\delta = 0$, where the gradient is small. However, it has the risk of overshooting the optimal 
 perturbation when the gradients grow fast outside this neighborhood. 
 
-
-\subsubsection{Normalized Steepest Descent}
 
 \subsubsection{Targetted attacks}
 
@@ -99,6 +97,7 @@ by maximizing the loss for the actual (true) label and minimizing the loss for t
 
 \subsubsection{Non-$l_{\infty}$ norms}
 
+Note: projecting onto the norm ball means clipping values of $\delta$ to lie within $[-\epsilon, \epsilon]$
 
 In the methods described above, the optimization was performed under the $l_{\infty}$ norm; however, 
 the other norm types can also be used for the same task.
@@ -117,11 +116,22 @@ $l_2$ attacks are typically localized in the specific area of the image.
 
 \subsection{Exactly solving the inner maximization (combinatorial optimization)}
 
-We assume attacks against each and every class and determine whether an adversarial example exists in the neighbourhood of some point.
+We assume attacks against each and every class and determine whether an 
+adversarial example exists in the neighbourhood of some point.
+
+In this method, we do not actually solve the inner maximization problem, but we can determine exactly whether or not an adversarial
+example exists within a certain radius. 
 
 \subsubsection{Certifying robustness}
 
-% If we want to determine, exactly, whether any adversarial example exists for a given example and , we can simply run the integer programming solution using a targeted attack for every possible alternative class label. If any of these optimization objectives have a negative solution, then there exists and adversarial example, and the optimization formulation provides it for us. In contrast, if none of the optimization objectives is negative for any target class, then the classifier has been formally certified to be robust on this example. Let’s see how to do this to verify that a smaller perturbation ball cannot change the class label.
+% If we want to determine, exactly, whether any adversarial example exists for a given example
+%  and , we can simply run the integer programming solution using a targeted attack for every 
+%  possible alternative class label. If any of these optimization objectives have a negative
+%   solution, then there exists and adversarial example, and the optimization formulation provides 
+%   it for us. In contrast, if none of the optimization objectives is negative for any target 
+%   class, then the classifier has been formally certified to be robust on this example.
+%    Let’s see how to do this to verify that a smaller perturbation ball cannot change the class 
+%    label.
 
 
 
@@ -137,13 +147,24 @@ is based on bound propagation.
 
 \subsubsection{Convex relaxation}
 
-% The tricky part of the integer program we discussed earlier is the binary constraint vi∈{0,1}vi​∈{0,1}, which captures the ReLU operation. This constraint makes the problem hard to solve because it's not a convex set. Without this constraint, the problem would be much easier to solve, as it would become a linear program, which has faster solution methods.
+The challenge that arose in the previous method is the binary constraint $v_i \in {0, 1}$, which 
+captures the ReLU operation. This problem is hard to solve since the set is non-convex. 
+So, we can ease the problem by relaxing the constraints and dealing with a convex set instead.
 
-% To make the problem easier, we can relax this constraint. Instead of requiring vivi​ to be either 0 or 1, we allow it to take on any value between 0 and 1. So, the relaxed constraint becomes 0≤vi≤10≤vi​≤1. This relaxation makes the problem more manageable because it removes the combinatorial complexity introduced by the binary constraint.
+Instead of requiring $v_i$ to be 0 or 1, we allow it to take fractional values, i.e.:
+
+\[ 0  \leq v_i \leq 1\]
 
 
-% So, by relaxing the binary constraint to allow vivi​ to take any value between 0 and 1, we're essentially making the problem easier to handle. This is a common strategy used in optimization, known as convex relaxation.
+Despite this change, the overall optimization problem remains unchanged from before.
 
-% Despite this change, the overall optimization problem remains unchanged from before. The key idea is that this relaxation helps us better understand the problem. For instance, if we solve the relaxed version of a targeted attack problem and find that the objective (the value we're trying to optimize) is still positive, it tells us something important. Specifically, it suggests that the attack won't be effective.
+The key idea is that this relaxation helps us better understand the problem. 
 
-% Why? Because if the relaxed problem's objective is positive, it means that the relaxed set of solutions is larger than the original set. In other words, if no "adversarial example" exists in the relaxed set, it won't exist in the original set either. So, even though we've simplified the problem by relaxing the constraints, we can still draw meaningful conclusions from it.
+For instance, if we solve the relaxed version of a targeted attack problem and
+find that the objective (the value we're trying to optimize) is still positive, 
+it tells us something important. Specifically, it suggests that the attack won't be effective.
+
+
+If no "adversarial example" exists in the relaxed set, it won't exist in the original 
+set either. So, even though we've simplified the problem by relaxing the constraints, we 
+can still draw meaningful conclusions from it.
