@@ -2,7 +2,7 @@
 
 The study is based on the tutorial - "Adversarial Robustness - Theory and Practice".
 
-In the "reports" folder, you can find a synopsis of the article. All the testing code is located in the "src" folder.
+In the `reports` folder, you can find a synopsis of the article. All the testing code is located in the `src` folder.
 
 
 The study focuses on adversarial attacks and the subsequent adversarial robustness, which pose significant threats to machine learning models.
