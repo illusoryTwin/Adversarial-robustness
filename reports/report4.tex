@@ -1,9 +1,16 @@
 \section{Chapter 4 - Adversarial training}
 
-We need to train a model to be robust against various types of potential attacks. This will be achieved by 
+We need to train a model to be robust against various types of potential attacks even in the cases when attackers know everything about te model. This will be achieved by 
 minimizing the worst-case loss function. 
 
 Let's train the model and evaluate its performance when different attacks are applied to the model. 
 However, due to the computational complpexity of the exact solution method, we will test only two types of attacks:
-lower bound and convex relaxation. 
+lower bound and convex upper bounds. 
 
+\[\min_{\theta} \frac{1}{|S|} \sum_{x,y \in S} \max_{\|\delta\| \leq \epsilon} \mathcal{L}(h_{\theta}(x + \delta), y)\]
+
+We will analyze loss surfaces to understand the origin of robustness in models trained on a specific kind of attacks.
+
+Loss surfaces of models trained to be robust against, for example, PGD-based adversarial attacks are smoother compared 
+to those of traditionally trained models. Let's recall that a smoother curve suggests that small changes in the input data will result in relatively small 
+changes in the output loss.

@@ -1,13 +1,5 @@
 \section{Chapter 3 - Neural Networks}
 
-\subsection{Norms}
-\begin{enumerate}
-    \item $l_{\infty}$
-    \item $l_2$
-    \item $l_1$
-\end{enumerate}
-
-
 \subsection{Aspects of Neural Networks}
 
 The application and performance of adversarial attacks are highly relevant to neural networks.
@@ -129,17 +121,6 @@ adversarial example exists in the neighbourhood of some point.
 
 In this method, we do not actually solve the inner maximization problem, but we can determine exactly whether or not an adversarial
 example exists within a certain radius. 
-
-\subsubsection{Certifying robustness}
-
-% If we want to determine, exactly, whether any adversarial example exists for a given example
-%  and , we can simply run the integer programming solution using a targeted attack for every 
-%  possible alternative class label. If any of these optimization objectives have a negative
-%   solution, then there exists and adversarial example, and the optimization formulation provides 
-%   it for us. In contrast, if none of the optimization objectives is negative for any target 
-%   class, then the classifier has been formally certified to be robust on this example.
-%    Let’s see how to do this to verify that a smaller perturbation ball cannot change the class 
-%    label.
 
 
 
